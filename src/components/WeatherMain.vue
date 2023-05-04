@@ -8,6 +8,7 @@
     <div v-if="isLoad">
       <div>Погода в місті {{ city }}</div>
       <div v-if="weather && isLoad">
+        <div><img :src="imageUrl" alt="sun"></div>
         <p>Температура: {{weather.main.temp}}</p>
         <p>Вітер: {{weather.wind.speed}}</p>
         <p>Хмарність: {{weather.clouds.all}}</p>
@@ -50,6 +51,11 @@ export default {
         this.error = error;
         this.isLoad = true;
       }
+    },
+  },
+  computed:{
+    imageUrl(){
+      return `/img/${this.weather.weather[0].icon}.png`;
     }
   }
 }
