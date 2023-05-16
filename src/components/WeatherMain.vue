@@ -1,13 +1,22 @@
 <template>
-  <div>Погода в місті {{ city }}</div>
-  <div v-if="isLoading">Завантажується...</div>
-  <div v-if="weather && !isLoading">
-    <p>Температура: {{weather.main.temp}}</p>
-    <p>Вітер: {{weather.wind.speed}}</p>
-    <p>Хмарність: {{weather.clouds.all}}</p>
-    <p>Атмосферний тиск: {{weather.main.pressure}}</p>
+  <div>
+    <div>
+      <p>Введіть назву міста англійською</p>
+      <p><input v-model="city"></p>
+      <p><input type="button" @click="getWeatherData" value="Пошук"></p>
+    </div>
+    <div v-if="isLoad">
+      <div>Погода в місті {{ city }}</div>
+      <div v-if="weather && isLoad">
+        <div><img :src="imageUrl" alt="sun"></div>
+        <p>Температура: {{weather.main.temp}}</p>
+        <p>Вітер: {{weather.wind.speed}}</p>
+        <p>Хмарність: {{weather.clouds.all}}</p>
+        <p>Атмосферний тиск: {{weather.main.pressure}}</p>
+      </div>
+      <div v-if="error">{{ error }}</div>
+    </div>
   </div>
-  <div v-if="error">{{ error }}</div>
 </template>
 
 <script>
@@ -17,15 +26,15 @@ export default {
   name: "WeatherMain",
   data() {
     return {
-      city: 'Lviv',
+      city: '',
       weather: {},
-      isLoading: true,
+      isLoad: false,
       error: null
     }
   },
-  mounted(){
+  /*mounted(){
     this.getWeatherData()
-  },
+  },*/
   methods: {
     async getWeatherData(){
       try {
@@ -37,11 +46,16 @@ export default {
           }
         })
         this.weather = response.data;
-        this.isLoading = false;
+        this.isLoad = true;
       } catch (error){
         this.error = error;
-        this.isLoading = false;
+        this.isLoad = true;
       }
+    },
+  },
+  computed:{
+    imageUrl(){
+      return `/img/${this.weather.weather[0].icon}.png`;
     }
   }
 }
