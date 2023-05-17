@@ -1,18 +1,14 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
   <WeatherMain />
-  <hr/>
-  <WeatherFor3Days />
 </template>
 
 <script>
 import WeatherMain from './components/WeatherMain.vue'
-import WeatherFor3Days from "@/components/WeatherFor3Days";
 
 export default {
   name: 'App',
   components: {
-    WeatherFor3Days,
     WeatherMain
   }
 }
