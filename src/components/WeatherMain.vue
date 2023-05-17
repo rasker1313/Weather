@@ -4,21 +4,20 @@
       <p>Введіть назву міста англійською</p>
       <p><input v-model="city"/></p>
       <p><button @click="getCoordinates">Пошук</button></p>
-<!--      <p><input type="button" @click="getWeatherData" value="Пошук"></p>-->
     </div>
     <div v-if="isLoad">
       <div><p>Погода в місті {{ city }}</p></div>
-      <div><p>З координатами: lat: {{ coordinates[0] }}, lon: {{ coordinates[1] }}</p></div>
+<!-- <div><p>З координатами: lat: {{ coordinates[0] }}, lon: {{ coordinates[1] }}</p></div>-->
       <hr>
       <div v-if="weather && isLoad" >
-        <div class="" v-for="(day, key) in this.weather.list" :key="key">
-<!--          <div><img :src="imageUrl" alt="sun"></div>-->
-          <p>Температура: {{day.main.temp}}</p>
-          <p>Вітер: {{day.wind.speed}}</p>
-          <p>Хмарність: {{day.clouds.all}}</p>
-          <p>Атмосферний тиск: {{day.main.pressure}}</p>
-          <p>Час: {{ day.dt_txt }}</p>
-          <hr>
+        <div class="" v-for="(day, key) in slicedDays()" :key="key">
+            <div><img :src="imageUrl(day.weather[0].icon)" alt="sun"></div>
+            <p>Температура: {{day.main.temp}}</p>
+            <p>Вітер: {{day.wind.speed}}</p>
+            <p>Хмарність: {{day.clouds.all}}</p>
+            <p>Атмосферний тиск: {{day.main.pressure}}</p>
+            <p>Час: {{ editDate(day.dt_txt, 5, -3) }}</p>
+            <hr>
         </div>
       </div>
       <div v-if="error">{{ error }}</div>
@@ -38,6 +37,7 @@ export default {
       isLoad: false,
       coordinates: null,
       error: null,
+      limit: 3,
     }
   },
   methods: {
@@ -95,11 +95,20 @@ export default {
         this.isLoad = true;
       }
     },
+    slicedDays(){
+      return Object.fromEntries(Object.entries(this.weather.list).slice(0, this.limit));
+    },
+    editDate(date, start, end){
+      return date.slice(start, end)
+    },
+    imageUrl(iconName){
+      console.log(iconName)
+      return `/img/${iconName}.png`;
+    }
   },
   computed:{
-    /*imageUrl(){
-      return `/img/${this.weather.weather[0].icon}.png`;
-    }*/
+
+
   }
 }
 </script>
