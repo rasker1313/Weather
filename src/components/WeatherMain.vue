@@ -16,12 +16,14 @@
       <hr>
       <div v-if="weather && isLoad" class="weather-container">
         <div class="weather-block" v-for="(day, key) in slicedDays()" :key="key">
-            <div><img :src="imageUrl(day.weather[0].icon)" alt="sun"></div>
-            <p>Температура: {{day.main.temp}}</p>
-            <p>Вітер: {{day.wind.speed}}</p>
-            <p>Хмарність: {{day.clouds.all}}</p>
-            <p>Атмосферний тиск: {{day.main.pressure}}</p>
-            <p>Час: {{ editDate(day.dt_txt, 5, -3) }}</p>
+            <div class="img"><img :src="imageUrl(day.weather[0].icon)" alt="sun"></div>
+            <div class="info">
+              <p>Температура: {{day.main.temp}}</p>
+              <p>Вітер: {{day.wind.speed}}</p>
+              <p>Хмарність: {{day.clouds.all}}</p>
+              <p>Атмосферний тиск: {{day.main.pressure}}</p>
+              <p>Час: {{ editDate(day.dt_txt, 5, -3) }}</p>
+            </div>
         </div>
       </div>
       <div v-if="error">{{ error }}</div>
@@ -103,18 +105,28 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
   .disable{
     opacity:0.5;
     user-select: none;
   }
   .weather-container{
     display:flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap;
   }
   .weather-block{
-    width:25%;
+    min-width:250px;
+    background: rgba(255,255,255,0.4);
+    margin:0 10px 20px;
+
+    .img{
+      background: rgba(255,255,255,0.9);
+      padding: 10px;
+    }
+    .info{
+      text-align: left;
+      padding: 10px;
+    }
   }
 </style>

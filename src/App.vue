@@ -25,7 +25,7 @@ export default {
 html{
   height:100%;
   background: rgb(64,148,255);
-  background: linear-gradient(0deg, rgba(64,148,255,1) 0%, rgba(255,255,255,1) 50%, rgba(251,250,124,1) 100%);
+  background: linear-gradient(0deg, rgba(64,148,255,1) 0%, rgba(251,250,124,1) 100%);
   background-attachment: fixed;
 }
 </style>
