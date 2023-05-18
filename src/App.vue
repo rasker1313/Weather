@@ -1,5 +1,4 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
   <WeatherMain />
 </template>
 
@@ -22,5 +21,11 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+html{
+  height:100%;
+  background: rgb(64,148,255);
+  background: linear-gradient(0deg, rgba(64,148,255,1) 0%, rgba(255,255,255,1) 50%, rgba(251,250,124,1) 100%);
+  background-attachment: fixed;
 }
 </style>
